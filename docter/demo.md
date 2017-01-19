@@ -1,119 +1,58 @@
-# resources
-my learning resources
+## 请求地址
 
-## Python
-
-```python
-def func():
-    return 0
+```
+POST /api/funds/withdrawal/
 ```
 
-### Python Web framework
-- [Django](https://github.com/django/django)
+## 请求头
 
-> The Web framework for perfectionists with deadlines
-> [https://www.djangoproject.com/](https://www.djangoproject.com/)
+参数 | 说明 | 取值范围 | 示例 |
+--- | --- | --- | ---
+platform | 平台 | wechat | wechat
+usertype | 用户类型 | doctor | doctor
+Authorization | 认证头 | basic与后面的值 中间以空格隔开 | basic {uid}
 
-- [flask](https://github.com/pallets/flask)
+`Authorization`说明
 
-> A microframework based on Werkzeug, Jinja2 and good intentions [http://flask.pocoo.org/](http://flask.pocoo.org/)
+- 测试环境  basic {uid} // 代表登录对象的uid, 如usertype是doctor就填doctor的uid
 
-- [tornado](https://github.com/tornadoweb/tornado)
+- 正式环境 bearer {token} // 代表授权令牌，需要授权的接口都要加上
 
-> Tornado is a Python web framework and asynchronous
-> networking library, originally developed at FriendFeed.
-> [http://www.tornadoweb.org/](http://www.tornadoweb.org/)
+## 请求数据
 
-- [bottle](https://github.com/bottlepy/bottle)
+- 参数说明
 
-> bottle.py is a fast and simple micro-framework for python
-> web-applications. [http://bottlepy.org/](http://bottlepy.org/)
+参数 | 说明 | 取值范围 | 示例 |
+--- | --- | --- | ---
+fullname | 持卡人姓名 | str | 持卡人姓名
+amount | 提现金额 | float | 10
+cardno | 银行卡号 | str | 64634256435
+account_bank | 开户行 | str | 开户行
+sms_code | 提现验证码 | str | 123456
 
+```json
+{
+    "fullname": "持卡人姓名",
+    "amount": 10,
+    "cardno": "64634256435",
+    "account_bank": "开户行",
+    "sms_code": "123456"
+}
+```
 
-- [falcon](https://github.com/falconry/falcon)
-
-> Falcon is a bare metal Python framework for building
-> high-performance HTTP APIs, app backends, and higher-level
-> frameworks.
-> [https://falcon.readthedocs.io/en/stable/](https://falcon.readthedocs.io/en/stable/)
-
-
-- [sanic](https://github.com/channelcat/sanic)
-
-> Python 3.5+ web server that's written to go fast
-
-- [pyramid](https://github.com/Pylons/pyramid)
-
-> Pyramid web framework [https://trypyramid.com/](https://trypyramid.com/)
-
-
-### Python DateTime
-
-- [Arrow](https://github.com/crsmithdev/arrow)
-
-> Better dates & times for Python [https://arrow.readthedocs.org](https://arrow.readthedocs.org)
-
-- [pendulum](https://github.com/sdispater/pendulum)
-
-> Python datetimes made easy [https://pendulum.eustace.io](https://pendulum.eustace.io)
+## 返回数据
 
 
-### Python Network
+- 请求成功
+```json
+{
+    "errmsg": "提交成功!"
+}
+```
 
-- [requests](https://github.com/kennethreitz/requests)
-
-> Python HTTP Requests for Humans™ [http://python-requests.org](http://python-requests.org)
-
-- [aiohttp](https://github.com/KeepSafe/aiohttp)
-
-> http client/server for asyncio (PEP-3156) [http://aiohttp.readthedocs.io](http://aiohttp.readthedocs.io)
-
-- [httpie](https://github.com/jkbrzt/httpie)
-
-> Modern command line HTTP client – user-friendly curl alternative with intuitive UI, JSON support, syntax highlighting, wget-like downloads, extensions, etc. 
-> Follow [https://twitter.com/clihttp]( https://twitter.com/clihttp)  for tips and updates. 
-> [https://httpie.org](https://httpie.org)
-
-### Python Learning
-- [python-guide](https://github.com/kennethreitz/python-guide)
-
-> Python best practices guidebook, written for Humans. [http://docs.python-guide.org](http://docs.python-guide.org)
-
-- [intermediatePython](https://github.com/yasoob/intermediatePython)
-
-> [http://book.pythontips.com](http://book.pythontips.com)
-
-- [interpy-zh](https://github.com/eastlakeside/interpy-zh)
-
-> 《Python进阶》（Intermediate Python 中文版） [https://eastlakeside.gitbooks.io/interpy-zh/content/](https://eastlakeside.gitbooks.io/interpy-zh/content/)
-
-- [StarterLearningPython](https://github.com/qiwsir/StarterLearningPython)
-
-> Learning Python: from Beginner to Master. [http://www.itdiffer.com](http://www.itdiffer.com)
-
-- [python3-cookbook](http://python3-cookbook.readthedocs.io/zh_CN/latest/)
-
-- [Algorithms](https://github.com/prakhar1989/Algorithms)
-
-> Data Structures and Algorithms in Python
-
-- [algorithms](https://github.com/nryoung/algorithms)
-
-> An educational library of algorithms in Python
-
-- [python-patterns](https://github.com/faif/python-patterns)
-
-> https://github.com/faif/python-patterns
-
-### Others
-- [awesome-python](https://github.com/vinta/awesome-python)
-
-> A curated list of awesome Python frameworks, libraries, software and resources [http://awesome-python.com/](http://awesome-python.com/)
-
-
-- [ITArticles](https://github.com/qiwsir/ITArticles)
-
-
-- [Learning-SICP](https://github.com/DeathKing/Learning-SICP)
-
-> 《计算机程序的构造和解释》公开课中文化项目。[http://www.youku.com/playlist_show/id_18958522.html](http://www.youku.com/playlist_show/id_18958522.html)
+- 请求失败
+```json
+{
+    "errmsg": "您的可提现金额不足!"
+}
+```
