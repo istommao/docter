@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Marked in the browser</title>
+  <script src="/static/lib/marked.js"></script>
+  <link rel="stylesheet" href="/static/main.css">
+  <link rel="stylesheet" href="/static/lib/main.css">
+  <link rel="stylesheet" href="static/lib/highlight/styles/monokai_sublime.min.css">
+  <script type="text/javascript" src="/static/main.js"></script>
+  <script src="/static/lib/highlight/highlight.min.js"></script>
+</head>
+<body>
+  <div id="pageWrapper">
+    <div class="topNav" id="topNav">
+      <div class="topbarHead">
+        docter
+      </div>
+    </div>
+
+    <div class="container" id="container">
+        <div class="aside" id="sidebar">
+            {% include "menu.html" %}
+        </div>
+        <div class="main">
+            <div id="content" class="mainContent">{{ content }}</div>
+        </div>
+    </div>
+  </div>
+  <script>
+    var ele = document.getElementById("content");
+
+    var content = ele.innerHTML;
+    content = content.replace(/&gt;/g, '>');
+
+    ele.innerHTML = marked(content);
+
+    hljs.initHighlightingOnLoad();
+  </script>
+</body>
+</html>
